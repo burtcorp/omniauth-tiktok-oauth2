@@ -1,8 +1,8 @@
 require 'oauth2'
 require 'omniauth/strategies/oauth2'
 
-OAuth2::Response.register_parser(:tiktok, ['application/json']) do |body|
-  JSON.parse(body)['data']
+OAuth2::Response.register_parser(:tiktok, []) do |body|
+  JSON.parse(body).fetch('data') rescue body
 end
 
 module OmniAuth
