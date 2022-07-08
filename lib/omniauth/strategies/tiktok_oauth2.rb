@@ -11,9 +11,9 @@ module OmniAuth
       USER_INFO_URL = 'https://business-api.tiktok.com/open_api/v1.2/user/info/'
       option :name, "tiktok_oauth2"
       option :client_options,
-             site: 'https://business-api.tiktok.com',
-             authorize_url: 'https://ads.tiktok.com/marketing_api/auth',
-             token_url: 'https://business-api.tiktok.com/open_api/v1.2/oauth2/access_token'
+             site: 'https://business-api.tiktok.com/',
+             authorize_url: 'https://ads.tiktok.com/marketing_api/auth/',
+             token_url: 'https://business-api.tiktok.com/open_api/v1.2/oauth2/access_token/'
 
       option :pkce, true
 
@@ -49,7 +49,7 @@ module OmniAuth
         options.token_params.merge(
           app_id: options.client_id,
           secret: options.client_secret,
-          auth_code: request.params["code"],
+          auth_code: request.params["auth_code"],
           parse: :tiktok,
         )
       end
