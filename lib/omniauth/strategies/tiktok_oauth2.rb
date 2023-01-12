@@ -8,12 +8,12 @@ end
 module OmniAuth
   module Strategies
     class TiktokOauth2 < OmniAuth::Strategies::OAuth2
-      USER_INFO_URL = 'https://business-api.tiktok.com/open_api/v1.2/user/info/'
+      USER_INFO_URL = 'https://business-api.tiktok.com/open_api/v1.3/user/info/'
       option :name, "tiktok_oauth2"
       option :client_options,
              site: 'https://business-api.tiktok.com/',
              authorize_url: 'https://ads.tiktok.com/marketing_api/auth/',
-             token_url: 'https://business-api.tiktok.com/open_api/v1.2/oauth2/access_token/'
+             token_url: 'https://business-api.tiktok.com/open_api/v1.3/oauth2/access_token/'
 
       option :pkce, true
 
@@ -62,6 +62,17 @@ module OmniAuth
         {
           'Access-Token' => access_token.token,
         }
+      end
+
+      def build_access_token
+        client.auth_code.get_token(
+          request.params['code'],
+          {
+            redirect_uri: callback_url,
+            headers: {'Content-Type' => 'application/json'},
+          }.merge(token_params.to_hash(symbolize_keys: true)),
+          deep_symbolize(options.auth_token_params)
+        )
       end
     end
   end
